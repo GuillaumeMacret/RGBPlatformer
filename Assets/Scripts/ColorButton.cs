@@ -46,11 +46,25 @@ public class ColorButton : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == PLAYER_TAG && m_Cooldown <= 0)
+        if(other.gameObject.tag == PLAYER_TAG)
         {
-            ColorController.SwitchColor(color);
-            m_ClickSound.Play();
-            m_Cooldown = BUTTON_COOLDOWN;
+            ColorController.GetInstance().currentTouchingButton = this;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == PLAYER_TAG)
+        {
+            ColorController.GetInstance().currentTouchingButton = null;
+        }
+    }
+
+    public bool Activate()
+    {
+        if (m_Cooldown > 0) return false;
+        m_ClickSound.Play();
+        m_Cooldown = BUTTON_COOLDOWN;
+        return true;
     }
 }

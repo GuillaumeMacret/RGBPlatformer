@@ -7,17 +7,37 @@ using static Constants;
 
 public class ColorController : MonoBehaviour
 {
-    private static Dictionary<PlatformsColors, bool> m_ColorOnMap;
+    private static ColorController INSTANCE;
 
-    public static Dictionary<PlatformsColors, AudioClip> audioClipMap;
-    private static PlatformsColors m_CurrentMusicColor = PlatformsColors.RED;
-    private static AudioSource m_AudioSource;
+    public static ColorController GetInstance()
+    {
+        return INSTANCE;
+    }
+
+    private Dictionary<PlatformsColors, bool> m_ColorOnMap;
+
+    public Dictionary<PlatformsColors, AudioClip> audioClipMap;
+    private PlatformsColors m_CurrentMusicColor = PlatformsColors.RED;
+    private AudioSource m_AudioSource;
 
     public GameObject redContainer, greenContainer, blueContainer;
     public LevelConfig levelConfig;
 
+    public ColorButton currentTouchingButton;
+    private bool m_IsUsingAction;
+
     private void Awake()
     {
+
+        if (INSTANCE != null && INSTANCE != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            INSTANCE = this;
+        }
+
         audioClipMap = new Dictionary<PlatformsColors, AudioClip>
         {
             {PlatformsColors.RED,Resources.Load<AudioClip>("Sounds/DJ Sona’s Music - Concussive")},
@@ -41,9 +61,14 @@ public class ColorController : MonoBehaviour
         redContainer.SetActive(m_ColorOnMap[PlatformsColors.RED]);
         greenContainer.SetActive(m_ColorOnMap[PlatformsColors.GREEN]);
         blueContainer.SetActive(m_ColorOnMap[PlatformsColors.BLUE]);
+
+        if (m_IsUsingAction && currentTouchingButton != null && currentTouchingButton.Activate())
+        {
+            SwitchColor(currentTouchingButton.color);
+        }
     }
 
-    private static void ChangeMusic(PlatformsColors color)
+    private void ChangeMusic(PlatformsColors color)
     {
         m_CurrentMusicColor = color;
         m_AudioSource.clip = audioClipMap[color];
@@ -51,7 +76,7 @@ public class ColorController : MonoBehaviour
         m_AudioSource.Play();
     }
 
-    public static void SwitchColor(PlatformsColors color)
+    public void SwitchColor(PlatformsColors color)
     {
         m_ColorOnMap[color] = !m_ColorOnMap[color];
         if (m_ColorOnMap[color] && m_CurrentMusicColor != color)
@@ -62,6 +87,8 @@ public class ColorController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        m_IsUsingAction = CrossPlatformInputManager.GetButtonDown("Action");
+
         if (CrossPlatformInputManager.GetButtonDown("Red") && levelConfig.canUseRedSwitch)
         {
             SwitchColor(PlatformsColors.RED);

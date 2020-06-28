@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8752602571818088194}
   - component: {fileID: 8752602571818088198}
   - component: {fileID: 4365564995064703992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GreenButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
