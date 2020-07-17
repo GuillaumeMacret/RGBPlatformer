@@ -1,10 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Constants;
 
 public class LevelConfig : MonoBehaviour
 {
-    public bool canUseRedSwitch = false;
-    public bool canUseGreenSwitch = false;
-    public bool canUseBlueSwitch = false;
+    private Dictionary<PlatformsColors, bool> m_CanUseSwitch;
+
+    private void Awake()
+    {
+        m_CanUseSwitch = new Dictionary<PlatformsColors, bool>
+        {
+            {PlatformsColors.RED,false },
+            {PlatformsColors.GREEN,false },
+            {PlatformsColors.BLUE,false }
+        };
+    }  
+
+    public void AddSwitch(PlatformsColors color)
+    {
+        m_CanUseSwitch[color] = true;
+    }
+
+    public bool CanUseColor(PlatformsColors color)
+    {
+        return m_CanUseSwitch[color];
+    }
 }
