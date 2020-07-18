@@ -40,11 +40,12 @@ public class ColorController : MonoBehaviour
 
         audioClipMap = new Dictionary<PlatformsColors, AudioClip>
         {
-            {PlatformsColors.RED,Resources.Load<AudioClip>("Sounds/DJ Sona’s Music - Concussive")},
-            {PlatformsColors.GREEN,Resources.Load<AudioClip>("Sounds/DJ Sona’s Music - Kinetic")},
-            {PlatformsColors.BLUE,Resources.Load<AudioClip>("Sounds/DJ Sona’s Music - Ethereal")}
+            {PlatformsColors.RED,Resources.Load<AudioClip>("Sounds/Lifeformed - 9-bit Expedition")},
+            {PlatformsColors.GREEN,Resources.Load<AudioClip>("Sounds/Lifeformed - Undiscovery (Dustforce DX OST)")},
+            {PlatformsColors.BLUE,Resources.Load<AudioClip>("Sounds/Lifeformed - The Magnetic Tree (Fastfall - Dustforce OST)")}
 
         };
+        Debug.Log(audioClipMap);
         m_AudioSource = GetComponent<AudioSource>();
         ChangeMusic(PlatformsColors.BLUE);
 
