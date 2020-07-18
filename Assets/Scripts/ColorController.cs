@@ -58,6 +58,21 @@ public class ColorController : MonoBehaviour
 
     private void Update()
     {
+        m_IsUsingAction = CrossPlatformInputManager.GetButtonDown("Action");
+
+        if (CrossPlatformInputManager.GetButtonDown("Red") && levelConfig.CanUseColor(PlatformsColors.RED))
+        {
+            SwitchColor(PlatformsColors.RED);
+        }
+        if (CrossPlatformInputManager.GetButtonDown("Green") && levelConfig.CanUseColor(PlatformsColors.GREEN))
+        {
+            SwitchColor(PlatformsColors.GREEN);
+        }
+        if (CrossPlatformInputManager.GetButtonDown("Blue") && levelConfig.CanUseColor(PlatformsColors.BLUE))
+        {
+            SwitchColor(PlatformsColors.BLUE);
+        }
+
         redContainer.SetActive(m_ColorOnMap[PlatformsColors.RED]);
         greenContainer.SetActive(m_ColorOnMap[PlatformsColors.GREEN]);
         blueContainer.SetActive(m_ColorOnMap[PlatformsColors.BLUE]);
@@ -87,20 +102,7 @@ public class ColorController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_IsUsingAction = CrossPlatformInputManager.GetButtonDown("Action");
-
-        if (CrossPlatformInputManager.GetButtonDown("Red") && levelConfig.CanUseColor(PlatformsColors.RED))
-        {
-            SwitchColor(PlatformsColors.RED);
-        }
-        if (CrossPlatformInputManager.GetButtonDown("Green") && levelConfig.CanUseColor(PlatformsColors.GREEN))
-        {
-            SwitchColor(PlatformsColors.GREEN);
-        }
-        if (CrossPlatformInputManager.GetButtonDown("Blue") && levelConfig.CanUseColor(PlatformsColors.BLUE))
-        {
-            SwitchColor(PlatformsColors.BLUE);
-        }
+        
     }
 
     public void UnlockColor(PlatformsColors color)
