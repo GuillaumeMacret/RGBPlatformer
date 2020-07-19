@@ -21,6 +21,7 @@ public class ColorController : MonoBehaviour
     private AudioSource m_AudioSource;
 
     public GameObject redContainer, greenContainer, blueContainer;
+    public GameObject redContainerKeepMotion, greenContainerKeepMotion, blueContainerKeepMotion;
     public LevelConfig levelConfig;
 
     public ColorButton currentTouchingButton;
@@ -45,7 +46,6 @@ public class ColorController : MonoBehaviour
             {PlatformsColors.BLUE,Resources.Load<AudioClip>("Sounds/Lifeformed - The Magnetic Tree (Fastfall - Dustforce OST)")}
 
         };
-        Debug.Log(audioClipMap);
         m_AudioSource = GetComponent<AudioSource>();
         ChangeMusic(PlatformsColors.BLUE);
 
@@ -77,6 +77,33 @@ public class ColorController : MonoBehaviour
         redContainer.SetActive(m_ColorOnMap[PlatformsColors.RED]);
         greenContainer.SetActive(m_ColorOnMap[PlatformsColors.GREEN]);
         blueContainer.SetActive(m_ColorOnMap[PlatformsColors.BLUE]);
+
+        foreach(SpriteRenderer child in redContainerKeepMotion.GetComponentsInChildren<SpriteRenderer>())
+        {
+            child.enabled = m_ColorOnMap[PlatformsColors.RED];
+        }
+        foreach (Collider2D child in redContainerKeepMotion.GetComponentsInChildren<Collider2D>())
+        {
+            child.enabled = m_ColorOnMap[PlatformsColors.RED];
+        }
+
+        foreach (SpriteRenderer child in blueContainerKeepMotion.GetComponentsInChildren<SpriteRenderer>())
+        {
+            child.enabled = m_ColorOnMap[PlatformsColors.BLUE];
+        }
+        foreach (Collider2D child in blueContainerKeepMotion.GetComponentsInChildren<Collider2D>())
+        {
+            child.enabled = m_ColorOnMap[PlatformsColors.BLUE];
+        }
+
+        foreach (SpriteRenderer child in greenContainerKeepMotion.GetComponentsInChildren<SpriteRenderer>())
+        {
+            child.enabled = m_ColorOnMap[PlatformsColors.GREEN];
+        }
+        foreach (Collider2D child in greenContainerKeepMotion.GetComponentsInChildren<Collider2D>())
+        {
+            child.enabled = m_ColorOnMap[PlatformsColors.GREEN];
+        }
 
         if (m_IsUsingAction && currentTouchingButton != null && currentTouchingButton.Activate())
         {

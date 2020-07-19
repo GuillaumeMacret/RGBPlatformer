@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Constants;
 
 public class LevelConfig : MonoBehaviour
@@ -25,5 +26,10 @@ public class LevelConfig : MonoBehaviour
     public bool CanUseColor(PlatformsColors color)
     {
         return m_CanUseSwitch[color];
+    }
+
+    public static void GameOver()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

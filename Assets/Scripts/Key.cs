@@ -6,6 +6,7 @@ using static Constants;
 public class Key : MonoBehaviour
 {
     public PlatformsColors color;
+    public AudioClip pickupsound;
 
     private CircleCollider2D m_Collider;
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class Key : MonoBehaviour
         if (other.gameObject.tag == PLAYER_TAG)
         {
             ColorController.GetInstance().UnlockColor(color);
+            other.GetComponent<AudioSource>().PlayOneShot(pickupsound);
             Destroy(gameObject);
         }
     }

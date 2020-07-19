@@ -5599,6 +5599,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScenePortal
       objectReference: {fileID: 0}
+    - target: {fileID: 1673070486729639167, guid: f716042cbd4e8c948a374e7346adf564,
+        type: 3}
+      propertyPath: sceneName
+      value: Tuto3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f716042cbd4e8c948a374e7346adf564, type: 3}
 --- !u!1001 &2046442492589666136
