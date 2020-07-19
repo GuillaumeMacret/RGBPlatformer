@@ -38,11 +38,15 @@ namespace UnityStandardAssets._2D
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+            Collider2D[] collidersCeil = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius, m_WhatIsGround);
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject && colliders[i].gameObject.layer != 8 && colliders[i].gameObject.layer != 9)
                 {
-                    m_Grounded = true;
+                    if(colliders[i].transform.position.y > transform.position.y)
+                    {
+                        m_Grounded = true;
+                    }
                 }
             }
             m_Anim.SetBool("Ground", m_Grounded);
