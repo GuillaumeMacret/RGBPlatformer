@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
         {
             LevelConfig.GameOver();
         }
+        Destroy(this.gameObject);
     }
 
     private void Update()

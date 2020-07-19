@@ -52,10 +52,12 @@ public class BulletEmiter : MonoBehaviour
     {
         Bullet bullet = Instantiate(bulletPrefab);
         bullet.velocity = bulletDirection;
-        //bullet.transform.parent = bulletContainer.transform;
-        bullet.transform.position = transform.position;
-        Quaternion qt = new Quaternion();
-        qt.eulerAngles = new Vector3(0, 0, rotation);
+        bullet.transform.parent = bulletContainer.transform;
+        bullet.transform.position = new Vector3(transform.position.x, transform.position.y,0);
+        Quaternion qt = new Quaternion
+        {
+            eulerAngles = new Vector3(0, 0, rotation)
+        };
         bullet.transform.rotation = qt;
     }
 }
