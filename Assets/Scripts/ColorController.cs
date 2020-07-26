@@ -27,6 +27,11 @@ public class ColorController : MonoBehaviour
     public ColorButton currentTouchingButton;
     private bool m_IsUsingAction;
 
+    private AudioSource m_crossfadeAudioSource;
+    public float crossFadeTime = .5f;
+    public float musicBaseVolume = .2f;
+    private float crossFadeTimer;
+
     private void Awake()
     {
 
@@ -46,8 +51,12 @@ public class ColorController : MonoBehaviour
             {PlatformsColors.BLUE,Resources.Load<AudioClip>("Sounds/Lifeformed - The Magnetic Tree (Fastfall - Dustforce OST)")}
 
         };
-        m_AudioSource = GetComponent<AudioSource>();
-        ChangeMusic(PlatformsColors.BLUE);
+        m_AudioSource = GetComponents<AudioSource>()[0];
+        m_AudioSource.clip = audioClipMap[PlatformsColors.BLUE];
+        m_AudioSource.Play();
+
+        m_crossfadeAudioSource = GetComponents<AudioSource>()[1];
+
 
         m_ColorOnMap = new Dictionary<PlatformsColors, bool>
         {
@@ -109,14 +118,30 @@ public class ColorController : MonoBehaviour
         {
             SwitchColor(currentTouchingButton.color);
         }
+
+        if (crossFadeTimer > 0)
+        {
+            crossFadeTimer -= Time.deltaTime;
+            float fadePercent = crossFadeTimer / crossFadeTime;
+            m_AudioSource.volume = musicBaseVolume * (1 - fadePercent);
+            m_crossfadeAudioSource.volume = musicBaseVolume * fadePercent;
+            Debug.Log(fadePercent);
+        }
     }
 
     private void ChangeMusic(PlatformsColors color)
     {
         m_CurrentMusicColor = color;
+        float currTime = m_AudioSource.time;
+
+        crossFadeTimer = crossFadeTime;
+        m_crossfadeAudioSource.clip = m_AudioSource.clip;
         m_AudioSource.clip = audioClipMap[color];
-        Debug.Log(audioClipMap[color]);
+
+        m_crossfadeAudioSource.Play();
+        m_crossfadeAudioSource.time = currTime;
         m_AudioSource.Play();
+        m_AudioSource.time = currTime;
     }
 
     public void SwitchColor(PlatformsColors color)
